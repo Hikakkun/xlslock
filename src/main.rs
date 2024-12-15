@@ -15,8 +15,8 @@ struct Args {
 }
 fn process_xlsx(path: &Path, password: &str) {
     match set_password(path, password) {
-        Ok(_) => info!("Processed file {:?} with password", path),
-        Err(e) => error!("Error processing {:?}: {:?}", path, e),        
+        Ok(_) => info!("Processed file {:?} with password", path.display()),
+        Err(e) => error!("Error processing {:?}: {:?}", path.display(), e),        
     }
 
 }
@@ -27,11 +27,11 @@ fn process_csv(path : &Path){
             for (file_path, password) in data {
                 if file_path.exists() {
                     match set_password(&file_path, &password) {
-                        Ok(_) => info!("Processed file {:?} with password", file_path),
-                        Err(e) => error!("Error processing {:?}: {:?}", file_path, e),
+                        Ok(_) => info!("Processed file {:?} with password", file_path.display()),
+                        Err(e) => error!("Error processing {:?}: {:?}", file_path.display(), e),
                     }
                 } else {
-                    error!("File does not exist: {:?}", file_path);
+                    error!("File does not exist: {:?}", file_path.display());
                 }
             }
         }
@@ -44,8 +44,8 @@ fn process_csv(path : &Path){
 fn process_directory(path: &Path, password: &str) {
     for file_path in  collect_xlsx_paths(path){
         match set_password(&file_path, password) {
-            Ok(_) => info!("Processed file {:?} with password", file_path),
-            Err(e) => error!("Error processing {:?}: {:?}", file_path, e),
+            Ok(_) => info!("Processed file {:?} with password", file_path.display()),
+            Err(e) => error!("Error processing {:?}: {:?}", file_path.display(), e),
         }
     }
 }
