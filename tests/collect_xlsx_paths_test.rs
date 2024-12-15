@@ -31,5 +31,8 @@ fn test_collect_xlsx_paths() {
         valid_xlsx_2.canonicalize().unwrap(),
     ];
 
-    assert_eq!(result, expected, "Unexpected result from collect_xlsx_paths");
+    assert_eq!(
+        result, expected,
+        "Unexpected result from collect_xlsx_paths"
+    );
 }

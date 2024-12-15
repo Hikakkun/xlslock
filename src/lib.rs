@@ -1,10 +1,9 @@
-extern crate umya_spreadsheet;
+use log::error;
+use rpassword::read_password;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
-use log::error;
-use rpassword::read_password;
 
 pub fn get_password(single_input: bool) -> Result<String, String> {
     if single_input {
@@ -34,16 +33,18 @@ pub fn get_password(single_input: bool) -> Result<String, String> {
     }
 }
 
-pub fn set_password(path: &std::path::Path, password: &str) -> Result<(), Box<dyn std::error::Error>> {
+pub fn set_password(
+    path: &std::path::Path,
+    password: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
     // ファイルを読み込む
     let book = umya_spreadsheet::reader::xlsx::read(path)?;
-    
+
     // パスワードを設定して保存
     umya_spreadsheet::writer::xlsx::write_with_password(&book, path, password)?;
-    
+
     Ok(())
 }
-
 
 pub fn collect_xlsx_paths(dir: &Path) -> Vec<PathBuf> {
     WalkDir::new(dir)
